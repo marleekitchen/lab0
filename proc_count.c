@@ -6,21 +6,19 @@
 
 static struct proc_dir_entry *entry;
 
-static int proc_count(struct seq_file *m, void *v){
-	//seq_printf(m, "Hello world\n");
+static int print_proc_count(struct seq_file *m, void *v){
 	struct task_struct *p; 
-	int sq = 0; 
+	int processcount = 0; 
 	for_each_process(p) {
-		//seq_printf(m, "hello, world\n"); 
-		sq++; 
+		processcount++; 
 	}
-	seq_printf(m, "%d\n", sq); 
+	seq_printf(m, "%d\n", processcount); 
 	return 0;
 }
 
 static int __init proc_count_init(void)
 {
-	entry = proc_create_single("count", 0, NULL, proc_count);
+	entry = proc_create_single("count", 0, NULL, print_proc_count);
 	pr_info("proc_count: init\n");
 	return 0;
 }
@@ -34,6 +32,6 @@ static void __exit proc_count_exit(void)
 module_init(proc_count_init);
 module_exit(proc_count_exit);
 
-MODULE_AUTHOR("Leslie Castelan");
-MODULE_DESCRIPTION("CS111 lab0 count proc number");
+MODULE_AUTHOR("Marlee Kitchen");
+MODULE_DESCRIPTION("Counts and outputs number of active kernel processes");
 MODULE_LICENSE("GPL");
